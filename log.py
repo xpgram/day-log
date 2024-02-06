@@ -1,6 +1,5 @@
 from typing import Sequence, TypeVar, Callable, Optional, Self
-from abc import ABC, abstractmethod
-from enum import Enum
+
 from datetime import date, datetime, time
 import platform
 import subprocess
@@ -15,148 +14,11 @@ T = TypeVar('T')
 
 # TODO Is textwrap core?
 
-data_file = "./logpy_data"
-
-helpText = '''
-I was going to do an object-tree thing, but I'm not convinced it would be better.
-'''.strip()
-
-
-####################################################################################################
-#### Constants, Tweeks and Knobs                                                                ####
-####################################################################################################
-
-TERM_WIDTH = 100
-TERM_HEIGHT = 50    # TODO Can this be informed (and updated on resize?) by the terminal's actual height?
-
-
-####################################################################################################
-#### Terminal Color Codes
-
-Chars = {
-    'EscapeChar': '\033',
-}
-
-TextMode = {
-    'Bold'       : '[1m',
-    'Thin'       : '[2m',
-    'Italic'     : '[3m',
-    'Underline'  : '[4m',
-    'SlowBlink'  : '[5m',
-    'FastBlink'  : '[6m',
-    'Strikethrough': '[9m',
-
-    'FontDefault': '[10m',
-    'Font2'      : '[11m',
-    'Font3'      : '[12m',
-    'Font4'      : '[13m',
-    'Font5'      : '[14m',
-    'Font6'      : '[15m',
-    'Font7'      : '[16m',
-    'Font8'      : '[17m',
-    'Font9'      : '[18m',
-    'Font10'     : '[19m',
-}
-
-# TODO Verify color names
-Color = {
-    'NoColor'    : '[0m',
-    'Reset'      : '[39m',
-    'Black'      : '[30m',
-    'Red'        : '[31m',
-    'Green'      : '[32m',
-    'Orange'     : '[33m',
-    'Blue'       : '[34m',
-    'Magenta'    : '[35m',
-    'Cyan'       : '[36m',
-    'Gray'       : '[37m',
-    'DarkGray'   : '[90m',
-    'LightRed'   : '[91m',
-    'LightGreen' : '[92m',
-    'Yellow'     : '[93m',
-    'LightBlue'  : '[94m',
-    'Pink'       : '[95m',
-    'LightCyan'  : '[96m',
-    'White'      : '[97m',
-}
-
-BackColor = {
-    'NoColor'    : '[0m',   # TODO This is the reset code for both text and back. Shouldn't these be consolidated?
-    'Reset'      : '[49m',
-    'Black'      : '[40m',
-    'Red'        : '[41m',
-    'Green'      : '[42m',
-    'Orange'     : '[43m',
-    'Blue'       : '[44m',
-    'Magenta'    : '[45m',
-    'Cyan'       : '[46m',
-    'Gray'       : '[47m',
-    'DarkGray'   : '[100m',
-    'LightRed'   : '[101m',
-    'LightGreen' : '[102m',
-    'Yellow'     : '[103m',
-    'LightBlue'  : '[104m',
-    'Pink'       : '[105m',
-    'LightCyan'  : '[106m',
-    'White'      : '[107m',
-}
-
-# Process dictionaries to include escape chars before their codes.
-for colorDict in [TextMode, Color, BackColor]:
-    for key in colorDict:
-        colorDict[key] = Chars['EscapeChar'] + colorDict[key]
-
-
-####################################################################################################
-#### Enums
-
-TimecodeType = Enum('TimecodeType', [
-    'Time',
-    'Banked',
-    'Owed',
-    'Muted',
-])
-
-View = Enum('View', [
-    'Normal',
-    'Compact',
-])
 
 
 ####################################################################################################
 #### Support functions                                                                          ####
 ####################################################################################################
-
-####################################################################################################
-#### Dictionary and List convenience methods
-
-def shift(array: list[T]) -> tuple[T, list[T]]:
-    """Returns the first value of array a and the remaining values as a new list, or None and [] if
-    a was empty to begin with."""
-    value = array[0] if len(array) > 0 else None
-    array = array[1:]
-    return (value, array)
-
-def get(index, array: list[T]) -> T | None:
-    "Returns the value held by 'array' at 'index' if one exists, returns None if not."
-    return array[index] if index >= 0 and index < len(array) else None
-
-def findKey(pred, d) -> str | None:
-    "Returns the first key to dictionary d where f( d[k] ) returns True, returns None otherwise."
-    results = [k for k, v in d.items() if pred(v) == True]
-    return results[0] if results else None
-
-def stringToInt(s) -> int | None:
-    "Converts a given string to a number, or returns None on failure."
-    try:
-        return int(s)
-    except (ValueError, TypeError):
-        return None
-
-def destructure(dict, *keys):
-    """Returns a list of values for the given keys in the order they appear as arguments to this
-    function."""
-    return list(dict[key] for key in keys)
 
 ####################################################################################################
 #### String convenience functions
@@ -397,28 +259,6 @@ class Term:
 ####################################################################################################
 #### Logstream Objects                                                                          ####
 ####################################################################################################
-
-class LogLine(ABC):
-    "An abstract class describing an interface for log-related objects."
-
-    @property
-    @abstractmethod
-    def lstype(self) -> str:
-        pass
-
-    @abstractmethod
-    def __init__(self, data: str = None) -> Self:
-        pass
-
-    @abstractmethod
-    def save(self) -> str:
-        "Returns a comprehensive string for storing in the save file."
-        pass
-
-    @abstractmethod
-    def render(self, view: View) -> str:
-        "Returns a string for displaying in the terminal."
-        pass
 
 
 class DateHeader(LogLine):
