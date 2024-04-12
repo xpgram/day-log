@@ -2,7 +2,7 @@ from typing import Self
 from abc import ABC, abstractmethod
 from enums.View import View
 
-class LogLine(ABC):
+class LogStreamAtom(ABC):
     "An abstract class describing an interface for log-related atoms."
 
     @property
