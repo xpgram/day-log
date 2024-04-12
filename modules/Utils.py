@@ -28,3 +28,26 @@ def destructure(dict, *keys):
     """Returns a list of values for the given keys in the order they appear as arguments to this
     function."""
     return list(dict[key] for key in keys)
+
+def getToken(stream: str, delim=' ') -> tuple[str, str]:
+    "Returns a tuple containing the next stream token and the remaining input stream."
+
+    index = stream.find(delim)
+    index = len(stream) if index == -1 else index
+
+    token = stream[:index]
+    reducedStream = stream[index + len(delim):]
+    return (token, reducedStream)
+
+def getTokens(stream: str, numTokens=1, delim=' ') -> tuple[list[str], str]:
+    """Returns a tuple containing an array of up to length n of the next n tokens, and the
+    remaining input stream."""
+    tokens = []
+
+    for i in range(0, numTokens):
+        token, stream = getToken(stream, delim)
+        if token == '':
+            break
+        tokens.append(token)
+
+    return (tokens, stream)
