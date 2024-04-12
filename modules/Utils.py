@@ -1,6 +1,4 @@
 
-# TODO Some of these concern lists and dictionaries: should they be broken off?
-
 def shift(array: list[T]) -> tuple[T, list[T]]:
     """Returns the first value of array a and the remaining values as a new list, or None and [] if
     a was empty to begin with."""
