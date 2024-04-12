@@ -13,8 +13,14 @@ class LogLine(ABC):
     def logstreamType(self) -> str:
         pass
 
+    @staticmethod
     @abstractmethod
-    def __init__(self, data: str = None) -> Self:
+    def fromInput(data: str) -> Self:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def fromSave(data: str) -> Self:
         pass
 
     @abstractmethod
