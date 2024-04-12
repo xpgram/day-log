@@ -6,7 +6,7 @@ from LogLine import LogLine, LogLineReadError
 
 class TimeLog(LogLine):
     "A logstream describing an event with a time window."
-    logstreamType = 'tlog'
+    logstreamType = 'time-log' # TODO What actually was my plan for these? Is this type checking?
 
     # TODO This either should be read in by __init__, or
     # TODO We expect the user to write '+2,1 money update - a note to append' and add the time ourselves.
@@ -23,11 +23,13 @@ class TimeLog(LogLine):
 
     # TODO finish this, then test it out
 
+    @staticmethod
     def fromInput(data: str):
         time = timeToString(datetime.now())
         data = f'{time} {data}'
         return TimeLog.fromSave(data)
 
+    @staticmethod
     def fromSave(self, data: str = None):
         # TODO Load from data.
         # 22:37 +2,1 money update - a short note about what I did, or possibly a long one; somewhere else is supposed to enforce the length of these things.
@@ -41,9 +43,6 @@ class TimeLog(LogLine):
 
         # TODO Anything goes wrong, throw a LogLine error
         # raise LogLineReadError('Hello.')
-
-    # def __init__(self):
-    #     pass
 
     def save(self) -> str: 
         tcTypePrefix = timecodeTypeToPrefix(self.timecodeType)
