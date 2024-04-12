@@ -1,2 +1,5 @@
 # IDE Settings
 .vscode
+
+# Python workspace file for demoing code
+/workbench.py
