@@ -1,12 +1,13 @@
 from typing import Self
 from abc import ABC, abstractmethod
+from enums.View import View
 
 class LogLine(ABC):
     "An abstract class describing an interface for log-related objects."
 
     @property
     @abstractmethod
-    def lstype(self) -> str:
+    def logstreamType(self) -> str:
         pass
 
     @abstractmethod
@@ -19,6 +20,6 @@ class LogLine(ABC):
         pass
 
     @abstractmethod
-    def render(self, view: View) -> str:    # TODO Missing import
+    def render(self, view: View) -> str:
         "Returns a string for displaying in the terminal."
         pass
