@@ -1,16 +1,25 @@
+import Utils
+from enums.TimecodeType import TimecodeType
 from LogLine import LogLine
 
 # TODO Lots of missing imports
 
 class TimeLog(LogLine):
     "A logstream describing an event with a time window."
-    lstype = 'tlog'
+    logstreamType = 'tlog'
 
+    # TODO This either should be read in by __init__, or
+    # TODO We expect the user to write '+2,1 money update - a note to append' and add the time ourselves.
+    # Actually. This illuminates a point.
+    # When loading from save, time is included. When creating a new, it isn't.
+    # And also, I need [year, month, day, hour, minute]
+    # TODO Time.py handles this.
     created = timeToString(datetime.now())
     timecode = ''
     timecodeType = TimecodeType.Time
     category = ''
-    shortnote = ''
+    shortnote = '' # TODO Not shortnote, full note.
+                   # Maybe excess after a '-' gets broken up into a separate logline.
 
     # TODO finish this, then test it out
 
@@ -20,6 +29,13 @@ class TimeLog(LogLine):
         
         # TODO Load from data.
         # 22:37 +2,1 money update - a short note about what I did, or possibly a long one; somewhere else is supposed to enforce the length of these things.
+
+        stream = data
+        time, stream = Utils.getToken(stream)
+        timecode, stream = Utils.getToken(stream)
+        category, stream = Utils.getToken(stream)
+
+        message = stream # TODO Send this to another logline?
 
     def save(self) -> str: 
         tcTypePrefix = timecodeTypeToPrefix(self.timecodeType)
