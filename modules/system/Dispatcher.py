@@ -1,7 +1,7 @@
 from typing import Callable
 
 # Types
-type EventData = dict[str, any]
+type EventData = any
 type EventCallback = Callable[[EventData], None]
 
 _eventDictionary: dict[str, list[EventCallback]] = {}
@@ -27,7 +27,7 @@ def off(event: str, callback: EventCallback):
   if callback in callbacks:
     callbacks.remove(callback)
 
-def emit(event: str, data: EventData = {}):
+def emit(event: str, data: EventData = None):
   """Emits an event. For every listener to this event, calls their callback
   function."""
 
