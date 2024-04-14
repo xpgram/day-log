@@ -15,6 +15,7 @@ class Time(LogStreamAtom):
 
   @staticmethod
   def create(data):
+    # TODO Read from data
     date = datetime.now()
     return Time(date)
 
