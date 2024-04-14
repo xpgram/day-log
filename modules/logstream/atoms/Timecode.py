@@ -1,12 +1,57 @@
+import re
+import Utils
+from logstream.Exceptions import LogLineReadError
+from logstream.atoms.LogStreamAtom import LogStreamAtom
+from enums.TimecodeType import TimecodeType
 
-"""
-This atom is for this part.
-      |--|
-12:31 +2,1 cras pulvinar - Mattis nunc sed blandit libero volutpat sed cras quis
-"""
+timecode_symbols = {
+  ' ': TimecodeType.Time,
+  '+': TimecodeType.Banked,
+  '-': TimecodeType.Owed,
+  '_': TimecodeType.Muted
+}
+timecode_symbols_inverse = Utils.inverseMap(timecode_symbols)
 
-def save():
-  pass
+timecode_regex = r'^.?\d{1,2},\d$'
 
-def render():
-  pass
+class Timecode(LogStreamAtom):
+  logstreamType = 'timecode-atom'
+
+  timeType: TimecodeType
+  hours = 0
+  quarters = 0
+
+  @staticmethod
+  def create(data):
+    if not re.match(timecode_regex, data):
+      raise LogLineReadError(f'Could not parse timecode "{data}"')
+
+    [hours, quarters] = data.split(',')
+
+    tcType = TimecodeType.Time
+    if not hours[0].isdigit():
+      symbol = hours[0]
+      tcType = timecode_symbols.get(symbol, None)
+      hours = hours[1:]
+
+    if type(tcType) != TimecodeType:
+      raise LogLineReadError(f'Could not parse timecode type: "{data}"')
+  
+    return Timecode(tcType, hours, quarters)
+
+  def __init__(self, timeType, hours, quarters):
+    self.timeType = timeType
+    self.hours = hours
+    self.quarters = quarters
+
+  def getString(self):
+    tcSymbol = timecode_symbols_inverse.get(self.timeType)
+    return f'{tcSymbol}{self.hours},{self.quarters}'
+
+  def save(self):
+    return self.getString()
+
+  def render(self, view):
+    string = self.getString()
+    # TODO Set color
+    return f'{string}'
