@@ -1,3 +1,8 @@
+from typing import TypeVar
+
+T = TypeVar('T')
+Y = TypeVar('Y')
+
 
 def shift(array: list[T]) -> tuple[T, list[T]]:
     """Returns the first value of array a and the remaining values as a new list, or None and [] if
@@ -14,6 +19,12 @@ def findKey(pred, d) -> str | None:
     "Returns the first key to dictionary d where f( d[k] ) returns True, returns None otherwise."
     results = [k for k, v in d.items() if pred(v) == True]
     return results[0] if results else None
+
+def inverseMap(d: dict[T, Y]) -> dict[Y, T]:
+    result = {}
+    for key, value in d.items():
+        result[value] = key
+    return result
 
 def stringToInt(s) -> int | None:
     "Converts a given string to a number, or returns None on failure."
