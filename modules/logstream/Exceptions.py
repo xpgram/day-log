@@ -1,6 +1,9 @@
 
 class LogstreamReadError(Exception):
-    "An exception for LogLine input stream errors."
+    "Could not parse data from save."
+
+class LogstreamSaveError(Exception):
+    "Could not serialize logstream object to save data."
 
 class LogstreamRenderError(Exception):
-    "An exception for LogLine render to output errors."
+    "Could not render logstream object for dislay."
