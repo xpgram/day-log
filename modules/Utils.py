@@ -21,8 +21,12 @@ def findKey(pred, d) -> str | None:
     return results[0] if results else None
 
 def inverseMap(d: dict[T, Y]) -> dict[Y, T]:
+    """Given a dictionary of keys to values, returns a new dictionary of values to keys.
+    Maps without strictly unique values are not accomodatable; raises KeyError."""
     result = {}
     for key, value in d.items():
+        if result.get(value):
+            raise KeyError("Failed to inverse map: key has already be set; value is not strictly unique.")
         result[value] = key
     return result
 
