@@ -1,6 +1,6 @@
 
-class LogLineReadError(Exception):
+class LogstreamReadError(Exception):
     "An exception for LogLine input stream errors."
 
-class LogLineRenderError(Exception):
+class LogstreamRenderError(Exception):
     "An exception for LogLine render to output errors."

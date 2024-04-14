@@ -1,6 +1,6 @@
 import re
 import Utils
-from logstream.Exceptions import LogLineReadError
+from logstream.Exceptions import LogstreamReadError
 from logstream.atoms.LogStreamAtom import LogStreamAtom
 from enums.TimecodeType import TimecodeType
 
@@ -24,7 +24,7 @@ class Timecode(LogStreamAtom):
   @staticmethod
   def create(data):
     if not re.match(timecode_regex, data):
-      raise LogLineReadError(f'Could not parse timecode "{data}"')
+      raise LogstreamReadError(f'Could not parse timecode "{data}"')
 
     [hours, quarters] = data.split(',')
 
@@ -35,7 +35,7 @@ class Timecode(LogStreamAtom):
       hours = hours[1:]
 
     if type(tcType) != TimecodeType:
-      raise LogLineReadError(f'Could not parse timecode type: "{data}"')
+      raise LogstreamReadError(f'Could not parse timecode type: "{data}"')
   
     return Timecode(tcType, hours, quarters)
 
