@@ -3,16 +3,24 @@ import Utils
 from logstream.Exceptions import LogstreamReadError
 from logstream.atoms.LogStreamAtom import LogStreamAtom
 from enums.TimecodeType import TimecodeType
+from constants.TerminalColors import ColorCodes, TextModeCodes, wrapText
+
+timecode_regex = r'^.?\d{1,2},\d$'
 
 timecode_symbols = {
-  ' ': TimecodeType.Time,
+  '': TimecodeType.Time,
   '+': TimecodeType.Banked,
   '-': TimecodeType.Owed,
   '_': TimecodeType.Muted
 }
 timecode_symbols_inverse = Utils.inverseMap(timecode_symbols)
 
-timecode_regex = r'^.?\d{1,2},\d$'
+timecode_styles_map = {
+  TimecodeType.Time: ColorCodes['Yellow'],
+  TimecodeType.Banked: ColorCodes['Green'],
+  TimecodeType.Owed: ColorCodes['Red'],
+  TimecodeType.Muted: ColorCodes['DarkGray'],
+}
 
 class Timecode(LogStreamAtom):
   logstreamType = 'timecode-atom'
@@ -52,6 +60,7 @@ class Timecode(LogStreamAtom):
     return self.getString()
 
   def render(self, view):
-    string = self.getString()
-    # TODO Set color
-    return f'{string}'
+    return wrapText(
+      timecode_styles_map[self.timeType],
+      self.getString()
+    )
