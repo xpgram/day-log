@@ -1,7 +1,7 @@
 from typing import Self
 from abc import ABC, abstractmethod
 from app.enums.View import View
-from app.state import ViewState
+from app.state.ViewState import ViewState
 
 class LogLine(ABC):
     "An abstract class describing an interface for log-related objects."
