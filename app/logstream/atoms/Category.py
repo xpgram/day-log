@@ -3,6 +3,8 @@ from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.View import View
 from app.logstream.Exceptions import LogstreamReadError
 
+SUBHEADING_DELIMITER = ' : '
+
 class Category(LogstreamAtom):
   logstreamType = 'category-atom'
 
@@ -11,7 +13,7 @@ class Category(LogstreamAtom):
 
   @staticmethod
   def create(data):
-    tokens = data.split(' - ')
+    tokens = data.split(SUBHEADING_DELIMITER)
     if not tokens[0]:
       raise LogstreamReadError(f'Category has no title.')
     if len(tokens) > 2:
@@ -27,7 +29,7 @@ class Category(LogstreamAtom):
 
   def _getString(self):
     "Returns the base string for saves and renders to build from."
-    separator = ' - ' if self.subtitle else ''
+    separator = SUBHEADING_DELIMITER if self.subtitle else ''
     return f'{self.title}{separator}{self.subtitle}'
   
   def save(self):
