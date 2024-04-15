@@ -1,4 +1,8 @@
+# I don't know if there's a use for this class, actually.
+# Messages are actually displayed as separate lines.
 
+# TODO LogLines that are too long should always wrap and indent.
+# How do I model this?
 
 """
 This atom is for this part.
