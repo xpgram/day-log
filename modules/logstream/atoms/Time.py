@@ -1,12 +1,9 @@
-
-"""
-This atom is for this part.
-|---|
-12:31 +2,1 cras pulvinar - Mattis nunc sed blandit libero volutpat sed cras quis
-"""
-
 from datetime import datetime
 from logstream.atoms.LogStreamAtom import LogStreamAtom
+from logstream.Exceptions import LogstreamReadError
+
+datetime_save_format = '%Y %m %d %H:%M'
+timestamp_regex = r'^\d{4} \d{2} \d{2} \d{2}:\d{2}$'
 
 class Time(LogStreamAtom):
   logstreamType = 'time-atom'
@@ -15,15 +12,17 @@ class Time(LogStreamAtom):
 
   @staticmethod
   def create(data):
-    # TODO Read from data
-    date = datetime.now()
-    return Time(date)
+    try:
+      date = datetime.strptime(data, datetime_save_format) if data else datetime.now()
+      return Time(date)
+    except ValueError:
+      raise LogstreamReadError(f'Could not parse date: "{data}"')
 
   def __init__(self, date: datetime):
     self.date = date
 
   def save(self):
-    return self.date.strftime('%Y %m %d %H:%M')
+    return self.date.strftime(datetime_save_format)
 
   def render(self, view):
     from constants.TerminalColors import ColorCodes, wrapText
