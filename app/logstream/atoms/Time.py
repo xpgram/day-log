@@ -22,7 +22,7 @@ class Time(LogstreamAtom):
     self.date = date
 
   def save(self):
-    return self.date.strftime(datetime_save_format)
+    return self.date.strftime(datetime_save_format) # TODO What is the delimiter between atoms on a log line?
 
   def render(self, view):
     from app.constants.TerminalColors import TextColor, wrapText
