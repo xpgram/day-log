@@ -1,9 +1,12 @@
+from math import trunc
 import re
 import app.system.Utils as Utils
 from app.logstream.Exceptions import LogstreamReadError
 from app.logstream.atoms.LogStreamAtom import LogStreamAtom
 from app.enums.TimecodeType import TimecodeType
 from app.constants.TerminalColors import TextColor, wrapText
+
+SUBHOUR_CHUNKS = 4
 
 timecode_regex = r'^.?\d{1,2},\d$'
 
@@ -27,14 +30,14 @@ class Timecode(LogStreamAtom):
 
   timeType: TimecodeType
   hours = 0
-  quarters = 0
+  subhours = 0
 
   @staticmethod
   def create(data):
     if not re.match(timecode_regex, data):
       raise LogstreamReadError(f'Could not parse timecode "{data}"')
 
-    [hours, quarters] = data.split(',')
+    [hours, subhours] = data.split(',')
 
     tcType = TimecodeType.Time
     if not hours[0].isdigit():
@@ -42,19 +45,26 @@ class Timecode(LogStreamAtom):
       tcType = timecode_symbols.get(symbol, None)
       hours = hours[1:]
 
+    hours = int(hours)
+    subhours = int(subhours)
+
+    if subhours / SUBHOUR_CHUNKS >= 1:
+      hours += trunc(subhours / SUBHOUR_CHUNKS)
+      subhours = subhours % SUBHOUR_CHUNKS
+
     if type(tcType) != TimecodeType:
       raise LogstreamReadError(f'Could not parse timecode type: "{data}"')
   
-    return Timecode(tcType, hours, quarters)
+    return Timecode(tcType, hours, subhours)
 
-  def __init__(self, timeType, hours, quarters):
+  def __init__(self, timeType: TimecodeType, hours: int, subhours: int):
     self.timeType = timeType
     self.hours = hours
-    self.quarters = quarters
+    self.subhours = subhours
 
   def getString(self):
     tcSymbol = timecode_symbols_inverse.get(self.timeType)
-    return f'{tcSymbol}{self.hours},{self.quarters}'
+    return f'{tcSymbol}{self.hours},{self.subhours}'
 
   def save(self):
     return self.getString()
