@@ -62,15 +62,15 @@ class Timecode(LogStreamAtom):
     self.hours = hours
     self.subhours = subhours
 
-  def getString(self):
+  def _getString(self):
     tcSymbol = timecode_symbols_inverse.get(self.timeType)
     return f'{tcSymbol}{self.hours},{self.subhours}'
 
   def save(self):
-    return self.getString()
+    return self._getString()
 
   def render(self, view):
     return wrapText(
       timecode_styles_map[self.timeType],
-      self.getString()
+      self._getString()
     )
