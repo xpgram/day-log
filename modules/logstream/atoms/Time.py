@@ -26,4 +26,8 @@ class Time(LogStreamAtom):
     return self.date.strftime('%Y %m %d %H:%M')
 
   def render(self, view):
-    return self.date.strftime('%H:%M')
+    from constants.TerminalColors import ColorCodes, wrapText
+    return wrapText(
+      ColorCodes['Cyan'],
+      self.date.strftime('%H:%M')
+    )
