@@ -1,14 +1,14 @@
 from app.logstream.atoms.LogStreamAtom import LogStreamAtom
 from app.enums.View import View
 
-class Message(LogStreamAtom):
-  logstreamType = 'message-atom'
+class Note(LogStreamAtom):
+  logstreamType = 'note-atom'
 
   text: str
 
   @staticmethod
   def create(data):
-    return Message(data)
+    return Note(data)
   
   def __init__(self, text: str):
     self.text = text
@@ -19,4 +19,4 @@ class Message(LogStreamAtom):
   def render(self, view):
     if view == View.Compact:
       return ''
-    return f' - {self.text}'
+    return f'{self.text}'
