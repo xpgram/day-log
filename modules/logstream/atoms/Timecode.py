@@ -3,7 +3,7 @@ import Utils
 from logstream.Exceptions import LogstreamReadError
 from logstream.atoms.LogStreamAtom import LogStreamAtom
 from enums.TimecodeType import TimecodeType
-from constants.TerminalColors import ColorCodes, TextModeCodes, wrapText
+from constants.TerminalColors import TextColor, wrapText
 
 timecode_regex = r'^.?\d{1,2},\d$'
 
@@ -16,10 +16,10 @@ timecode_symbols = {
 timecode_symbols_inverse = Utils.inverseMap(timecode_symbols)
 
 timecode_styles_map = {
-  TimecodeType.Time: ColorCodes['Yellow'],
-  TimecodeType.Banked: ColorCodes['Green'],
-  TimecodeType.Owed: ColorCodes['Red'],
-  TimecodeType.Muted: ColorCodes['DarkGray'],
+  TimecodeType.Time: TextColor['Yellow'],
+  TimecodeType.Banked: TextColor['Green'],
+  TimecodeType.Owed: TextColor['Red'],
+  TimecodeType.Muted: TextColor['DarkGray'],
 }
 
 class Timecode(LogStreamAtom):

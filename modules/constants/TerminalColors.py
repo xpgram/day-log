@@ -3,7 +3,7 @@ _Chars = {
   'EscapeChar': '\033',
 }
 
-TextModeCodes = {
+TextStyle = {
   'Bold'       : '[1m',
   'Thin'       : '[2m',
   'Italic'     : '[3m',
@@ -25,7 +25,7 @@ TextModeCodes = {
 }
 
 # TODO Verify color names
-ColorCodes = {
+TextColor = {
   'NoColor'    : '[0m',
   'Reset'      : '[39m',
   'Black'      : '[30m',
@@ -46,7 +46,7 @@ ColorCodes = {
   'White'      : '[97m',
 }
 
-BackColorCodes = {
+TextBgColor = {
   'NoColor'    : '[0m',   # TODO This is the reset code for both text and back. Shouldn't these be consolidated?
   'Reset'      : '[49m',
   'Black'      : '[40m',
@@ -68,7 +68,7 @@ BackColorCodes = {
 }
 
 # Process dictionaries to include escape chars before their codes.
-for colorDict in [TextModeCodes, ColorCodes, BackColorCodes]:
+for colorDict in [TextStyle, TextColor, TextBgColor]:
     for key in colorDict:
         colorDict[key] = _Chars['EscapeChar'] + colorDict[key]
 
@@ -80,4 +80,4 @@ def wrapText(styles: str | list[str], text: str):
     if type(styles) != list:
         styles = [styles]
     styleCodes = ''.join(styles)
-    return f'{styleCodes}{text}{ColorCodes['NoColor']}'
+    return f'{styleCodes}{text}{TextColor['NoColor']}'
