@@ -37,6 +37,13 @@ def stringToInt(s) -> int | None:
     except (ValueError, TypeError):
         return None
 
+def stringCutoff(s: str, length: int) -> str:
+    """Returns the given string cut to exactly 'length' characters or less. Uses an
+    ellipsis to indicate an omission."""
+    if len(s) > length:
+        s = f'{s[:length - 1]}…'
+    return s
+
 def destructure(dict, *keys):
     """Returns a list of values for the given keys in the order they appear as arguments to this
     function."""
