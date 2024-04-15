@@ -15,6 +15,8 @@ from app.state.ViewState import ViewState
 class LogstreamMolecule(ABC):
     "An abstract class describing an interface for log-related atoms."
 
+    # TODO Line number memory is held here (?)
+
     @property
     @abstractmethod
     def logstreamType(self) -> str:
@@ -49,5 +51,7 @@ class LogstreamMolecule(ABC):
         "Returns a string to display in the terminal."
         if not self._renderCache:
             self.cacheRender(ViewState.get())
+        # TODO Do the line-wrapping here.
+        # TODO Line numbers would be here as well, I suppose.
         return self._renderCache
 
