@@ -1,7 +1,7 @@
-from app.logstream.atoms.LogStreamAtom import LogStreamAtom
+from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.View import View
 
-class Note(LogStreamAtom):
+class Note(LogstreamAtom):
   logstreamType = 'note-atom'
 
   text: str

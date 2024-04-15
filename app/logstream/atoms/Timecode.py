@@ -2,7 +2,7 @@ from math import trunc
 import re
 import app.system.Utils as Utils
 from app.logstream.Exceptions import LogstreamReadError
-from app.logstream.atoms.LogStreamAtom import LogStreamAtom
+from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.TimecodeType import TimecodeType
 from app.constants.TerminalColors import TextColor, wrapText
 
@@ -25,7 +25,7 @@ timecode_styles_map = {
   TimecodeType.Muted: TextColor['DarkGray'],
 }
 
-class Timecode(LogStreamAtom):
+class Timecode(LogstreamAtom):
   logstreamType = 'timecode-atom'
 
   timeType: TimecodeType

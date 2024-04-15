@@ -1,11 +1,11 @@
 from datetime import datetime
-from app.logstream.atoms.LogStreamAtom import LogStreamAtom
+from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.logstream.Exceptions import LogstreamReadError
 
 datetime_save_format = '%Y %m %d %H:%M'
 timestamp_regex = r'^\d{4} \d{2} \d{2} \d{2}:\d{2}$'
 
-class Time(LogStreamAtom):
+class Time(LogstreamAtom):
   logstreamType = 'time-atom'
 
   date: datetime

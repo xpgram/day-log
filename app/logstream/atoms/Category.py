@@ -1,9 +1,9 @@
 from app.system import Utils
-from app.logstream.atoms.LogStreamAtom import LogStreamAtom
+from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.View import View
 from app.logstream.Exceptions import LogstreamReadError
 
-class Category(LogStreamAtom):
+class Category(LogstreamAtom):
   logstreamType = 'category-atom'
 
   title: str
