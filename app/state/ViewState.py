@@ -1,6 +1,6 @@
-from system import Dispatcher
-from constants import Events
-from enums.View import View
+from app.system import Dispatcher
+from app.constants import Events
+from app.enums.View import View
 
 _viewState = View.Normal
 

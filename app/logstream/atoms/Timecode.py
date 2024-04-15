@@ -1,9 +1,9 @@
 import re
-import system.Utils as Utils
-from logstream.Exceptions import LogstreamReadError
-from logstream.atoms.LogStreamAtom import LogStreamAtom
-from enums.TimecodeType import TimecodeType
-from constants.TerminalColors import TextColor, wrapText
+import app.system.Utils as Utils
+from app.logstream.Exceptions import LogstreamReadError
+from app.logstream.atoms.LogStreamAtom import LogStreamAtom
+from app.enums.TimecodeType import TimecodeType
+from app.constants.TerminalColors import TextColor, wrapText
 
 timecode_regex = r'^.?\d{1,2},\d$'
 

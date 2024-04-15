@@ -1,6 +1,6 @@
 from datetime import datetime
-from logstream.atoms.LogStreamAtom import LogStreamAtom
-from logstream.Exceptions import LogstreamReadError
+from app.logstream.atoms.LogStreamAtom import LogStreamAtom
+from app.logstream.Exceptions import LogstreamReadError
 
 datetime_save_format = '%Y %m %d %H:%M'
 timestamp_regex = r'^\d{4} \d{2} \d{2} \d{2}:\d{2}$'
@@ -25,7 +25,7 @@ class Time(LogStreamAtom):
     return self.date.strftime(datetime_save_format)
 
   def render(self, view):
-    from constants.TerminalColors import TextColor, wrapText
+    from app.constants.TerminalColors import TextColor, wrapText
     return wrapText(
       TextColor['Cyan'],
       self.date.strftime('%H:%M')

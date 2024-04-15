@@ -1,7 +1,7 @@
 from typing import Self
 from abc import ABC, abstractmethod
-from enums.View import View
-from state import ViewState
+from app.enums.View import View
+from app.state import ViewState
 
 class LogStreamAtom(ABC):
     "An abstract class describing an interface for log-related atoms."

@@ -1,6 +1,6 @@
-import system.Utils as Utils
-from enums.TimecodeType import TimecodeType
-from LogLine import LogLine, LogLineReadError
+import app.system.Utils as Utils
+from app.enums.TimecodeType import TimecodeType
+from app.logstream.LogLine import LogLine
 
 # TODO Lots of missing imports
 
