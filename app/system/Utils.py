@@ -11,9 +11,9 @@ def shift(array: list[T]) -> tuple[T, list[T]]:
     array = array[1:]
     return (value, array)
 
-def get(index, array: list[T]) -> T | None:
+def get(index, array: list[T], default: T | None = None) -> T | None:
     "Returns the value held by 'array' at 'index' if one exists, returns None if not."
-    return array[index] if index >= 0 and index < len(array) else None
+    return array[index] if index >= 0 and index < len(array) else default
 
 def findKey(pred, d) -> str | None:
     "Returns the first key to dictionary d where f( d[k] ) returns True, returns None otherwise."
