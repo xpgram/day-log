@@ -1,5 +1,5 @@
 import re
-import Utils
+import system.Utils as Utils
 from logstream.Exceptions import LogstreamReadError
 from logstream.atoms.LogStreamAtom import LogStreamAtom
 from enums.TimecodeType import TimecodeType

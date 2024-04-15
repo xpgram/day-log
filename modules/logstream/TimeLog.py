@@ -1,4 +1,4 @@
-import Utils
+import system.Utils as Utils
 from enums.TimecodeType import TimecodeType
 from LogLine import LogLine, LogLineReadError
 
