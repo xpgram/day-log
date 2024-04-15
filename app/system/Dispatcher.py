@@ -1,5 +1,7 @@
 from typing import Callable
 
+# TODO Make Dispatcher an easy-to-import class
+
 # Types
 type EventData = any
 type EventCallback = Callable[[EventData], None]
