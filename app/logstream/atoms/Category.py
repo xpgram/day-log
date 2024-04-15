@@ -1,4 +1,3 @@
-import re
 from app.system import Utils
 from app.logstream.atoms.LogStreamAtom import LogStreamAtom
 from app.enums.View import View
