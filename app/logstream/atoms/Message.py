@@ -1,12 +1,22 @@
+from app.logstream.atoms.LogStreamAtom import LogStreamAtom
+from app.enums.View import View
 
-"""
-This atom is for this part.
-                           |---------------------------------------------------|
-12:31 +2,1 cras pulvinar - Mattis nunc sed blandit libero volutpat sed cras quis
-"""
+class Message(LogStreamAtom):
+  logstreamType = 'message-atom'
 
-def save():
-  pass
+  text: str
 
-def render():
-  pass
+  @staticmethod
+  def create(data):
+    return Message(data)
+  
+  def __init__(self, text: str):
+    self.text = text
+  
+  def save(self):
+    return self.text
+
+  def render(self, view):
+    if view == View.Compact:
+      return ''
+    return f' - {self.text}'
