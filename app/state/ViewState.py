@@ -4,16 +4,20 @@ from app.enums.View import View
 
 _viewState = View.Normal
 
-def get() -> View:
-  "Returns the current View state."
-  return _viewState
+class ViewState:
+  @staticmethod
+  def get() -> View:
+    "Returns the current View state."
+    return _viewState
 
-def set(view: View):
-  "Sets the current View state and emits this as an event."
-  global _viewState
-  _viewState = view
-  announce()
+  @staticmethod
+  def set(view: View):
+    "Sets the current View state and emits this as an event."
+    global _viewState
+    _viewState = view
+    ViewState.announce()
 
-def announce():
-  "Emits a global event carrying the current view state as data."
-  Dispatcher.emit(Events.ViewStateUpdated, _viewState)
+  @staticmethod
+  def announce():
+    "Emits a global event carrying the current view state as data."
+    Dispatcher.emit(Events.ViewStateUpdated, _viewState)
