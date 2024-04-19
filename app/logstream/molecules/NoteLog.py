@@ -1,46 +1,28 @@
 from app.logstream.molecules.LogstreamMolecule import LogstreamMolecule
-from app.logstream.atoms.Time import Time
-from app.logstream.atoms.Timecode import Timecode
-from app.logstream.atoms.Category import Category
-import app.system.Utils as Utils
+from app.enums.View import View
 
 
-class TimeLog(LogstreamMolecule):
-  logstreamType = 'timelog-mol'
+class NoteLog(LogstreamMolecule):
+  logstreamType = 'notelog-mol'
 
-  timestamp: Time
-  timecode: Timecode | None # TODO Optional? Or write a different class?
-  category: Category
+  text: str
 
   @staticmethod
   def fromInput(data):
-    time = Time.create(None)
-    timecodeString, data = Utils.getToken(data)   # TODO And if tc doesn't exist?
-    timecode = Timecode.create(timecodeString)
-    category = Category.create(data)
-    return TimeLog(time, timecode, category)
+    return NoteLog(data)
   
   @staticmethod
   def fromSave(data):
-    timeStr, timecodeStr, categoryStr = data.split('#')
-    return TimeLog(
-      Time.create(timeStr),
-      Timecode.create(timecodeStr),
-      Category.create(categoryStr),
-    )
+    return NoteLog(data)
 
-  def __init__(self, time: Time, timecode: Timecode, category: Category):
-    self.time = time
-    self.timecode = timecode
-    self.category = category
+  def __init__(self, text: str):
+    self.text = text
 
   def save(self):
-    tokens = [
-      self.time.save(),
-      self.timecode.save(),
-      self.category.save(),
-    ]
-    return '#'.join(tokens)
+    return self.text
   
   def render(self, view):
-    return f'{self.time.display()} {self.timecode.display()} {self.category.display()}'
+    result = ''
+    if view != View.Compact:
+      result = f' - {self.text}'
+    return result
