@@ -7,7 +7,7 @@
 [ ] Built in indenting for UI things like line numbers.
 """
 
-import app.system.Utils as Utils
+from app.system.Utils import Utils
 import textwrap
 from typing import Self
 from abc import ABC, abstractmethod

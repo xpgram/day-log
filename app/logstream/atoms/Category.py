@@ -1,4 +1,4 @@
-from app.system import Utils
+from app.system.Utils import Utils
 from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.View import View
 from app.logstream.Exceptions import LogstreamReadError

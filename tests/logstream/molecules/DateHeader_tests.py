@@ -2,7 +2,7 @@
 from app.logstream.atoms.Time import Time
 from app.enums.View import View
 from app.state.ViewState import ViewState
-from app.system import Dispatcher
+from app.system.Dispatcher import Dispatcher
 from app.logstream.molecules.DateHeaderLog import DateHeaderLog
 from datetime import datetime
 

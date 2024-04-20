@@ -2,7 +2,7 @@ from app.logstream.molecules.LogstreamMolecule import LogstreamMolecule
 from app.logstream.atoms.Time import Time
 from app.logstream.atoms.Timecode import Timecode
 from app.logstream.atoms.Category import Category
-import app.system.Utils as Utils
+from app.system.Utils import Utils
 
 
 class TimeLog(LogstreamMolecule):

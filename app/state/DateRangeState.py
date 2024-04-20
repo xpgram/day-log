@@ -1,13 +1,12 @@
-from app.system import Dispatcher
+from app.system.Dispatcher import Dispatcher
 from app.constants import Events
 from datetime import datetime
 
-# TODO Should this be in a different file?
 class DateRange:
   start: datetime | None
   end: datetime | None
 
-  def __init__(self, start: datetime, end: datetime = None):
+  def __init__(self, start: datetime = None, end: datetime = None):
     self.start = start
     self.end = end
 

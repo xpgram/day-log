@@ -1,4 +1,4 @@
-from app.system import Dispatcher
+from app.system.Dispatcher import Dispatcher
 from app.constants import Events
 from app.enums.View import View
 

@@ -1,6 +1,6 @@
 from math import trunc
 import re
-import app.system.Utils as Utils
+from app.system.Utils import Utils
 from app.logstream.Exceptions import LogstreamReadError
 from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.TimecodeType import TimecodeType
