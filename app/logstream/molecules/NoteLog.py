@@ -22,7 +22,6 @@ class NoteLog(LogstreamMolecule):
     return self.text
   
   def render(self, view):
-    result = ''
-    if view != View.Compact:
-      result = f' - {self.text}'
-    return result
+    if view == View.Compact:
+      return ''
+    return f' - {self.text}'
