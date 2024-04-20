@@ -49,42 +49,69 @@ class LogstreamMolecule(ABC):
 
   def cacheRender(self, view: View):
     "Renders and caches the display string."
-    self._renderCache = self.render(view)
+    displayString = self.render(view)
+
+    displaySwitch = {
+      View.Compact: self._compactDisplay,
+      View.Markdown: self._markdownDisplay,
+    }
+    displayMethod = displaySwitch.get(ViewState.get(), self._normalDisplay)
+
+    self._renderCache = displayMethod(displayString)
 
   def display(self) -> str:
     "Returns a string to display in the terminal."
     if not self._renderCache:
       self.cacheRender(ViewState.get())
+    return self._renderCache
 
-    displaySwitch = {
-      View.Compact: self.compactDisplay,
-      View.Markdown: self.markdownDisplay,
-    }
-    displayMethod = displaySwitch.get(ViewState.get(), self.normalDisplay)
-
-    return displayMethod()
-
-  def normalDisplay(self):
+  def _renderIndents(self):
+    ""
     initialIndent = ''
     subsequentIndent = ' '*3
+    return initialIndent, subsequentIndent
+
+  def _normalDisplay(self, displayString):
+    initialIndent, subsequentIndent = self._renderIndents()
     # if useLineNumbers:    # TODO
-    #   initialIndent = f'{self._lineNumber:0>2} '
-    #   subsequentIndent = '-- ' + ' '*3
+    #   initialIndent = f'{self._lineNumber:0>2} {initialIndent}'
+    #   subsequentIndent = f'-- {subsequentIndent}'
 
-    lines = textwrap.wrap(
-      text = self._renderCache,
-      width = Viewport.TermWidth,
-      initial_indent= '',
-      subsequent_indent = ' '*3,
-    )
-    return '\n'.join(lines)
+    # Preserve '\n' characters, which textwrap will strip.
+    paragraphs = displayString.split('\n')
 
-  def compactDisplay(self):
+    # Textwrap and format each paragraph
+    for idx in range(0, len(paragraphs)):
+      lines: list[str]
+      paragraph = paragraphs[idx]
+
+      if idx == 0:
+        lines = textwrap.wrap(
+          text = paragraph,
+          width = Viewport.TermWidth,
+          initial_indent= initialIndent,
+          subsequent_indent = subsequentIndent,
+        )
+      else:
+        lines = textwrap.wrap(
+          text = paragraph,
+          width = Viewport.TermWidth,
+          initial_indent= subsequentIndent,
+          subsequent_indent = subsequentIndent,
+        )
+      # Rejoin textwrapped lines
+      paragraph = '\n'.join(lines)
+      paragraphs[idx] = paragraph
+
+    # Rejoin split '\n' characters
+    return '\n'.join(paragraphs)
+
+  def _compactDisplay(self, displayString):
     prefix = ''
     # if useLineNumbers:    # TODO
     #   prefix = f'{self.lineNumber:0>2} '
-    return prefix + Utils.stringCutoff(self._renderCache, Viewport.TermWidth)
+    return prefix + Utils.stringCutoff(displayString, Viewport.TermWidth)
 
-  def markdownDisplay(self):
+  def _markdownDisplay(self, displayString):
     # No line numbers
-    return self._renderCache
+    return displayString

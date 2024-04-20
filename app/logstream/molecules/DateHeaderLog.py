@@ -19,9 +19,9 @@ class DateHeaderLog(LogstreamMolecule):
 
   @staticmethod
   def fromInput(data):
-    inputDays = stringToInt(data) if data else 0
+    inputDays = stringToInt(data) if data and len(data) > 0 else 0
 
-    if not inputDays:
+    if type(inputDays) != int:
       raise LogstreamInputError(f'Could not parse date header adjustment: "{data}"; should be a +/- integer.')
 
     daysAdjustment = timedelta(days = inputDays)
@@ -44,3 +44,8 @@ class DateHeaderLog(LogstreamMolecule):
     if (view != View.Markdown):
       dateString = wrapText(TextColor['DarkGray'], dateString)
     return f'\n{dateString}'
+  
+  def _renderIndents(self):
+    initialIndent = ''
+    subsequentIndent = ''
+    return initialIndent, subsequentIndent
