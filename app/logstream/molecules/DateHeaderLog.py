@@ -30,7 +30,11 @@ class DateHeaderLog(LogstreamMolecule):
   
   @staticmethod
   def fromSave(data):
-    date = datetime.strptime(data, datetime_save_format)
+    try:
+      date = datetime.strptime(data, datetime_save_format)
+    except ValueError as err:
+      raise LogstreamReadError(f'Could not parse date object: "{err}"')
+
     return DateHeaderLog(date)
 
   def __init__(self, date: datetime):
