@@ -1,15 +1,46 @@
+from datetime import datetime, timedelta
+from app.logstream.molecules.LogstreamMolecule import LogstreamMolecule
+from app.enums.View import View
+from app.constants.TerminalColors import TextColor, wrapText
+from app.logstream.Exceptions import LogstreamInputError
+from app.system.Utils import stringToInt
 
-"""
-Two lines:
-|
-| November 28th, 2024
+datetime_save_format = '%A %B %d, %Y'
 
-In addition to visually separating days, these are helpful for day-by-day and week-by-week log sorting.
-The logstreams contained between them are considered owned by whichever is most recent.
+# TODO [ ] Logstream considers LogLines as owned by a dateHeader farther back in time.
+# TODO [ ] `print date apr 21` finds the DateHeader for April 21 [this year] and prints
+#    all logstream objects after it until discovering the next DateHeader object.
+# TODO [ ] DateHeaders are mapped by date to indices in the stream, for quick retrieval.
 
-A nice way of printing a day is finding one of these and printing all logstream objects from this until
-the next date header.
+class DateHeaderLog(LogstreamMolecule):
+  logstreamType = 'dateheader-mol'
 
-- Should the Manager have to scan every object looking for these guys?
-  - Or can there be a lookup dictionary these things self manage themselves within?
-"""
+  date: datetime
+
+  @staticmethod
+  def fromInput(data):
+    inputDays = stringToInt(data) if data else 0
+
+    if not inputDays:
+      raise LogstreamInputError(f'Could not parse date header adjustment: "{data}"; should be a +/- integer.')
+
+    daysAdjustment = timedelta(days = inputDays)
+    date = datetime.now() + daysAdjustment
+    return DateHeaderLog(date)
+  
+  @staticmethod
+  def fromSave(data):
+    date = datetime.strptime(data, datetime_save_format)
+    return DateHeaderLog(date)
+
+  def __init__(self, date: datetime):
+    self.date = date
+
+  def save(self):
+    return self.date.strftime(datetime_save_format)
+  
+  def render(self, view):
+    dateString = self.date.strftime(datetime_save_format)
+    if (view != View.Markdown):
+      dateString = wrapText(TextColor['DarkGray'], dateString)
+    return f'\n{dateString}'
