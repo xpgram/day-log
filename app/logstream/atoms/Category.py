@@ -3,13 +3,13 @@ from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.View import View
 from app.logstream.Exceptions import LogstreamReadError
 
-SUBHEADING_DELIMITER = ' : '
+SUBHEADING_DELIMITER = ' - '
 
 class Category(LogstreamAtom):
   logstreamType = 'category-atom'
 
   title: str
-  subtitle: str
+  subtitle: str # TODO Actually... maybe this isn't as useful as I thought.
 
   @staticmethod
   def create(data):
