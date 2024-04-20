@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from app.logstream.molecules.LogstreamMolecule import LogstreamMolecule
 from app.enums.View import View
 from app.constants.TerminalColors import TextColor, wrapText
-from app.logstream.Exceptions import LogstreamInputError
-from app.system.Utils import stringToInt
+from app.logstream.Exceptions import LogstreamInputError, LogstreamReadError
+from app.system.Utils import Utils
 
 datetime_save_format = '%A %B %d, %Y'
 
@@ -19,7 +19,7 @@ class DateHeaderLog(LogstreamMolecule):
 
   @staticmethod
   def fromInput(data):
-    inputDays = stringToInt(data) if data and len(data) > 0 else 0
+    inputDays = Utils.stringToInt(data) if data and len(data) > 0 else 0
 
     if type(inputDays) != int:
       raise LogstreamInputError(f'Could not parse date header adjustment: "{data}"; should be a +/- integer.')
