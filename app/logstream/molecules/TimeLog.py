@@ -43,4 +43,4 @@ class TimeLog(LogstreamMolecule):
     return '#'.join(tokens)
   
   def render(self, view):
-    return f'{self.time.display()} {self.timecode.display()} {self.category.display()}'
+    return f'{self.time.display()} {self.timecode.display()} {self.category.display()} --'
