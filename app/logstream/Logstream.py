@@ -40,7 +40,7 @@ class Logstream:
     #   I do kinda like that idea.
     #   Waait...
     #   Logs could listen for DateRangeState updates and choose themselves whether they
-    #   display themselves. Hm... interesting.
+    #   display. Hm... interesting.
     #   [ ] Do Logs need to know who their parent DateHeader is? Like a carry-forward. Or can they just use their own datetime creation stamp?
 
     lines = [ log.display() for log in self.stream ]
