@@ -520,12 +520,20 @@ print(r)
 '''
         Add line to previous log note.
 -       New log note, appended to previous timelog.
+-:      New log note, timestamped. Will render time. Historically these have been used as 'super bullet points'. I dunno if that's useful.
+- >     New log note, indented. For sub thoughts.
+- >>    New log note, indented further. This can probably go on forever, but there's a hard limit at the terminal width. Plus, it'll be ugly.
+          Should this be per note or like a setting you toggle on and off? Probably easier with the latter, right? Maybe `- <>` could reset.
 :       New timelog, autoset the timecode. Will merge into last if they round to the same div-15.
 : 0,2   New timelog, set the timecode to '0,2'. This will never merge.
 :: 0,2  New timelog, extend from the previous one. Will fail w/o a timecode. Use this if it's been 0,3 and you need to log a 0,1 then a 0,2.
-: --    New timelog, no timecode. Useful for timestamped notes. Does not contribute to hourly totals.
+          I cannot for the life of me remember what the fuck I'm talking about here. "Extend the previous one"? Don't they all?
+          What if it's been 0,3 and you log an 0,2 then an 0,2? I don't see how this could do any more than `: 0,2` already does.
 <       Undo previous line. May be multi-line if it extends past the linewrap. Adds the removed line (instruction?) to clipboard.
 >       Redo an undo? Probably 're-adds a line', which is slightly different. You could undo, submit, redo to insert something.
+          These two could work really simply. Undo moves the Log from the Logstream to the undo-queue. Redo does the opposite.
+          If you submit anything new, the undo-queue is obliterated.
+          I should add something visible to the display, indicating there is stuff in the undo queue.
 
 Ex:
 : 0,2 money update - fixed covers menu spawning too many covers
@@ -545,7 +553,8 @@ _ muted     _--  _0,1
 + banked    +--  +0,1   Time above 8,0 in a day or 35,0 a week will auto '+' I think.
 
 Commands:
-/help                   Prints help.
+/h                      Prints help.
+/help
 
 /hln                    Hides line number bar. Or toggles.
 /hide line numbers
