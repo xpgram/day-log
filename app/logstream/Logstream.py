@@ -17,6 +17,21 @@ from app.logstream.molecules.NoteLog import NoteLog
 import datetime
 
 
+# TODO Loading from save
+# One of the initial goals was to have a readable save file. At the very least a space efficient one.
+# Some of this might be unrealistic, but there isn't really a reason a format like this:
+#   Thu Feb 13, 2024
+#   08:31 0,2 day begin
+#   08:45 0,1 slack talk - cards don't save anymore, apparently
+#    - Not my fault, at least.
+#   09:28 0,3 ida idm conn - working out remaining todos.
+# Couldn't be understood to be Feb 13 at different postage times.
+# When loaded, the Logstream keeps in mind the most recently read date and passes it along
+# to any other logs it creates. This way, they can still render themselves by date, but
+# their data doesn't have to clutter the f- out of the save file.
+# TODO The only question is what to do if the date header is missing for some reason...
+
+
 class Logstream:
   stream: list[LogstreamMolecule] = []
 
