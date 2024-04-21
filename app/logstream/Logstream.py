@@ -6,10 +6,11 @@
 [ ] Input interprets commands and directs that input to the write class file.
 """
 
-from app.system import Dispatcher, Utils
+from app.system.Dispatcher import Dispatcher
+from app.system.Utils import Utils
 from app.constants import Events
 from app.enums.View import View
-from app.logstream.molecules.LogStreamMolecule import LogstreamMolecule
+from app.logstream.molecules.LogstreamMolecule import LogstreamMolecule
 from app.logstream.molecules.DateHeaderLog import DateHeaderLog
 from app.logstream.molecules.TimeLog import TimeLog
 from app.logstream.molecules.NoteLog import NoteLog
