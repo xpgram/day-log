@@ -4,7 +4,7 @@ from app.system.Utils import Utils
 from app.logstream.Exceptions import LogstreamReadError
 from app.logstream.atoms.LogstreamAtom import LogstreamAtom
 from app.enums.TimecodeType import TimecodeType
-from app.constants.TerminalColors import TextColor, wrapText
+from app.constants.TerminalColors import TextColor, TextStyle, wrapText
 
 SUBHOUR_CHUNKS = 4
 
@@ -12,6 +12,7 @@ timecode_regex = r'^.?\d{1,2},\d$'
 
 timecode_symbols = {
   '': TimecodeType.Time,
+  '*': TimecodeType.Wildcard,
   '+': TimecodeType.Banked,
   '-': TimecodeType.Owed,
   '_': TimecodeType.Muted,
@@ -21,6 +22,7 @@ timecode_symbols_inverse = Utils.inverseMap(timecode_symbols)
 
 timecode_styles_map = {
   TimecodeType.Time: TextColor['Yellow'],
+  TimecodeType.Wildcard: [TextStyle['Thin'], TextColor['Yellow'], ],
   TimecodeType.Banked: TextColor['Green'],
   TimecodeType.Owed: TextColor['Red'],
   TimecodeType.Muted: TextColor['DarkGray'],
