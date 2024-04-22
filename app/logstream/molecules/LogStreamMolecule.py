@@ -29,12 +29,12 @@ class LogstreamMolecule(ABC):
   @staticmethod
   @abstractmethod
   def fromInput(data: str) -> Self:
-    "Construct a new LogStream object from user input."
+    "Construct a new Logstream object from user input."
 
   @staticmethod
   @abstractmethod
   def fromSave(data: str) -> Self:
-    "Construct a new LogStream object from save data."
+    "Construct a new Logstream object from save data."
 
   @abstractmethod
   def save(self) -> str:

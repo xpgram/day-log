@@ -27,7 +27,7 @@ other higher-level display concerns.
 Off the top of my head:
 - Text and text wrapping
   - Whether the text is indented or flat.
-- LogStream ID (or 'line number')
+- Logstream ID (or 'line number')
 
 
 Example text:
