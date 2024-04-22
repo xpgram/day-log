@@ -524,6 +524,8 @@ print(r)
 - >     New log note, indented. For sub thoughts.
 - >>    New log note, indented further. This can probably go on forever, but there's a hard limit at the terminal width. Plus, it'll be ugly.
           Should this be per note or like a setting you toggle on and off? Probably easier with the latter, right? Maybe `- <>` could reset.
+- -     New log note, indented once. (Only for this line; do not set app state.)
+- - -   New log note, indented twice. (Only for this line; do not set app state.)
 :       New timelog, autoset the timecode. Will merge into last if they round to the same div-15.
 : 0,2   New timelog, set the timecode to '0,2'. This will never merge.
 :: 0,2  New timelog, extend from the previous one. Will fail w/o a timecode. Use this if it's been 0,3 and you need to log a 0,1 then a 0,2.
