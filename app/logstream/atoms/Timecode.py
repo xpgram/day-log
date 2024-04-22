@@ -14,7 +14,8 @@ timecode_symbols = {
   '': TimecodeType.Time,
   '+': TimecodeType.Banked,
   '-': TimecodeType.Owed,
-  '_': TimecodeType.Muted
+  '_': TimecodeType.Muted,
+  '?': TimecodeType.Uncertain,
 }
 timecode_symbols_inverse = Utils.inverseMap(timecode_symbols)
 
@@ -23,6 +24,7 @@ timecode_styles_map = {
   TimecodeType.Banked: TextColor['Green'],
   TimecodeType.Owed: TextColor['Red'],
   TimecodeType.Muted: TextColor['DarkGray'],
+  TimecodeType.Uncertain: TextColor['Pink'],
 }
 
 class Timecode(LogstreamAtom):

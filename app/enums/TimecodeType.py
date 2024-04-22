@@ -5,4 +5,5 @@ TimecodeType = Enum('TimecodeType', [
     'Banked',
     'Owed',
     'Muted',
+    'Uncertain',
 ])
