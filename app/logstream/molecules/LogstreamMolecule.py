@@ -7,10 +7,11 @@
 [ ] Built in indenting for UI things like line numbers.
 """
 
-from app.system.Utils import Utils
-import textwrap
 from typing import Self
 from abc import ABC, abstractmethod
+from datetime import datetime
+import textwrap
+from app.system.Utils import Utils
 import app.constants.Viewport as Viewport
 from app.enums.View import View
 from app.state.ViewState import ViewState
@@ -25,6 +26,11 @@ class LogstreamMolecule(ABC):
   @abstractmethod
   def logstreamType(self) -> str:
     "The.. class of object this is?" # TODO Answer this question.
+
+  @property
+  @abstractmethod
+  def createdOn(self) -> datetime:
+    "The date and time this log was first created."
 
   @staticmethod
   @abstractmethod
