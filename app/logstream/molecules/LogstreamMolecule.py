@@ -27,6 +27,8 @@ class LogstreamMolecule(ABC):
   def logstreamType(self) -> str:
     "The.. class of object this is?" # TODO Answer this question.
 
+  # TODO LogstreamMol.fromInput() -> basic details, TimeLog.createNew()
+  # TODO LogstreamMol.fromSave() -> follows pattern, TimeLog.loadData()
   @property
   @abstractmethod
   def createdOn(self) -> datetime:
