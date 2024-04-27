@@ -22,17 +22,16 @@ class LogstreamMolecule(ABC):
   # TODO Line number memory is held here (?)
   _lineNumber = '1'
 
+  _createdOn = datetime.now()
+
+  _renderCache: str | None = None
+
+
   @property
   @abstractmethod
   def logstreamType(self) -> str:
     "The.. class of object this is?" # TODO Answer this question.
 
-  # TODO LogstreamMol.fromInput() -> basic details, TimeLog.createNew()
-  # TODO LogstreamMol.fromSave() -> follows pattern, TimeLog.loadData()
-  @property
-  @abstractmethod
-  def createdOn(self) -> datetime:
-    "The date and time this log was first created."
 
   @staticmethod
   @abstractmethod
@@ -53,7 +52,24 @@ class LogstreamMolecule(ABC):
   def render(self, view: View) -> str:
     "Returns a render string built according to the given View type."
 
-  _renderCache: str | None = None
+  # TODO These two functions are supposed to support the inheritor's own save and load methods.
+  # I'm not sure... if I like this idea, though.
+  # 
+  # I've been trying (_trying_) to maintain a readable plain text file as the 'save' for this app,
+  # but maybe that's not realistic. Maybe I do need to think about json or sqlite.
+  def getStandardDataSaveString(self) -> str:
+    ""
+    return self._createdOn.strftime('%H:%M')
+
+  def loadStandardDataSaveString(self, data: str):
+    ""
+    # TODO Data is assumed to be much more than the tokens this abstract will itself save.
+    # So... We could use another delimiter. A super delimiter.
+    # This would be a lot easier with an segmentable dictionary. Like:
+    #   data['logstream'], and data['timelog']
+
+    createdOnStr, data = Utils.getToken(data, '#') # TODO Is this correct? I forget.
+    self._createdOn = datetime.strptime(createdOnStr, '%H:%M') # TODO The condensed format is time only, but that requires cooperation among the logstream.
 
   def cacheRender(self, view: View):
     "Renders and caches the display string."
