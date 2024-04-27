@@ -57,6 +57,8 @@ class LogstreamMolecule(ABC):
   # 
   # I've been trying (_trying_) to maintain a readable plain text file as the 'save' for this app,
   # but maybe that's not realistic. Maybe I do need to think about json or sqlite.
+  # 
+  # Json (or python dict?) would be easier rn than sqlite, but sqlite can be a long term goal.
   def getStandardDataSaveString(self) -> str:
     ""
     return self._createdOn.strftime('%H:%M')
